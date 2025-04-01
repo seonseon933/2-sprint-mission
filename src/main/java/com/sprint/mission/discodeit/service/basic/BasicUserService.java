@@ -10,6 +10,7 @@ import com.sprint.mission.discodeit.service.dto.user.UserCreateRequest;
 import com.sprint.mission.discodeit.service.dto.user.UserDto;
 import com.sprint.mission.discodeit.service.dto.user.UserUpdateRequest;
 import com.sprint.mission.discodeit.service.dto.user.userstatus.UserStatusCreateRequest;
+import java.time.Instant;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -36,8 +37,8 @@ public class BasicUserService implements UserService {
         User user = new User(createRequest.username(), createRequest.email(), createRequest.password(),
                 binaryContentId);
         userRepository.save(user);
-        UserStatusCreateRequest statusParam = new UserStatusCreateRequest(user.getId());
-        userStatusService.create(statusParam);
+        UserStatusCreateRequest statusRequest = new UserStatusCreateRequest(user.getId(), Instant.now());
+        userStatusService.create(statusRequest);
 
         return user;
     }
